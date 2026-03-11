@@ -1,22 +1,18 @@
-const a = Math.floor(Math.random() * 100000 + 1);
-const a_array = [];
-for (const i = 0; i < a; i++) {
-  a_array[i] = Math.floor(Math.random() * 100000 + 1);
-}
+const fs = require("fs");
+const input = fs.readFileSync(0).toString().trim().split("\n");
 
-const b = Math.floor(Math.random() * 100000 + 1);
-const b_array = [];
-for (const j = 0; j < b; j++) {
-  b_array[j] = Math.floor(Math.random() * 100000 + 1);
-}
+const n = Number(input[0]);
+const a_array = input[1].split(" ").map(Number);
 
-for (const j = 0; j < b; j++) {
-  for (i = 0; i < a_array.length; i++) {
-    if (b_array[j] == a_array[i]) {
-      console.log("1");
-      break;
-    } else {
-      console.log("0");
-    }
+const m = Number(input[2]);
+const b_array = input[3].split(" ").map(Number);
+
+const a_set = new Set(a_array);
+
+for (const j = 0; j < m; j++) {
+  if (a_set.has(b_array[j])) {
+    console.log("1");
+  } else {
+    console.log("0");
   }
 }
