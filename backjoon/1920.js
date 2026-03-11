@@ -9,7 +9,7 @@ const b_array = input[3].split(" ").map(Number);
 
 const a_set = new Set(a_array);
 
-for (const j = 0; j < m; j++) {
+for (let j = 0; j < m; j++) {
   if (a_set.has(b_array[j])) {
     console.log("1");
   } else {
