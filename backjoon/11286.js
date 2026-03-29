@@ -9,7 +9,10 @@ class MinHeap {
   }
 
   compare(a, b) {
-    return Math.abs(a) - Math.abs(b);
+    const absA = Math.abs(a);
+    const absB = Math.abs(b);
+    if (absA !== absB) return absA - absB;
+    return a - b;
   }
 
   push(val) {
