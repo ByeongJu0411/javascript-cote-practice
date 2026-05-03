@@ -19,7 +19,7 @@ function countBluray(size) {
   return count;
 }
 
-let left = 1;
+let left = Math.max(...lectures);
 let right = lectures.reduce((a, b) => a + b, 0);
 let result = right;
 
