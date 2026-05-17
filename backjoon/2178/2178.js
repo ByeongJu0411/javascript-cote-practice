@@ -1,31 +1,41 @@
 const fs = require("fs");
 const input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
+
 const [N, M] = input[0].split(" ").map(Number);
 const maze = [];
 for (let i = 1; i <= N; i++) {
   maze.push(input[i].split("").map(Number));
 }
 
-let answer = Infinity;
-const visited = Array.from({ length: N }, () => new Array(M).fill(false));
+const dx = [-1, 1, 0, 0];
+const dy = [0, 0, -1, 1];
 
-function go(x, y, count) {
-  if (x < 0 || y < 0 || x >= N || y >= M) return;
-  if (maze[x][y] === 0) return;
-  if (visited[x][y]) return;
+function bfs() {
+  const visited = Array.from({ length: N }, () => new Array(M).fill(false));
+  const queue = [[0, 0, 1]];
 
-  if (x === N - 1 && y === M - 1) {
-    answer = Math.min(answer, count);
-    return;
+  while (queue.length > 0) {
+    const [x, y, dist] = queue.shift();
+
+    // 꺼낼 때 방문 처리와 중복 체크
+    if (visited[x][y]) continue;
+    visited[x][y] = true;
+
+    if (x === N - 1 && y === M - 1) {
+      return dist;
+    }
+
+    for (let i = 0; i < 4; i++) {
+      const nx = x + dx[i];
+      const ny = y + dy[i];
+
+      if (nx < 0 || ny < 0 || nx >= N || ny >= M) continue;
+      if (maze[nx][ny] === 0) continue;
+      if (visited[nx][ny]) continue;
+
+      queue.push([nx, ny, dist + 1]); // visited 처리는 꺼낼 때만
+    }
   }
-
-  visited[x][y] = true; // 들어갈 때 방문 처리
-  go(x - 1, y, count + 1);
-  go(x + 1, y, count + 1);
-  go(x, y - 1, count + 1);
-  go(x, y + 1, count + 1);
-  visited[x][y] = false; // 나올 때 풀어주기
 }
 
-go(0, 0, 1);
-console.log(answer);
+console.log(bfs());
