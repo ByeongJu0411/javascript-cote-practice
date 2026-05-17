@@ -19,11 +19,12 @@ function go(x, y, count) {
     return;
   }
 
-  visited[x][y] = true;
+  visited[x][y] = true; // 들어갈 때 방문 처리
   go(x - 1, y, count + 1);
   go(x + 1, y, count + 1);
   go(x, y - 1, count + 1);
   go(x, y + 1, count + 1);
+  visited[x][y] = false; // 나올 때 풀어주기
 }
 
 go(0, 0, 1);
