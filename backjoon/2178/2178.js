@@ -12,14 +12,14 @@ const dy = [0, 0, -1, 1];
 
 function bfs() {
   const visited = Array.from({ length: N }, () => new Array(M).fill(false));
-  const queue = [[0, 0, 1]];
+  const queue = [];
+  let head = 0;
 
-  while (queue.length > 0) {
-    const [x, y, dist] = queue.shift();
+  queue.push([0, 0, 1]);
+  visited[0][0] = true;
 
-    // 꺼낼 때 방문 처리와 중복 체크
-    if (visited[x][y]) continue;
-    visited[x][y] = true;
+  while (head < queue.length) {
+    const [x, y, dist] = queue[head++];
 
     if (x === N - 1 && y === M - 1) {
       return dist;
@@ -29,11 +29,16 @@ function bfs() {
       const nx = x + dx[i];
       const ny = y + dy[i];
 
+      // 미로 범위 밖
       if (nx < 0 || ny < 0 || nx >= N || ny >= M) continue;
+      // 벽
       if (maze[nx][ny] === 0) continue;
+      // 이미 방문
       if (visited[nx][ny]) continue;
 
-      queue.push([nx, ny, dist + 1]); // visited 처리는 꺼낼 때만
+      // 중복 방지
+      visited[nx][ny] = true;
+      queue.push([nx, ny, dist + 1]);
     }
   }
 }
