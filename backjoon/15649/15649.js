@@ -17,6 +17,7 @@ function dfs() {
 
     selected.push(i);
     dfs();
+    selected.pop(); // 백트래킹 — 다음 경로를 위해 되돌리기
   }
 }
 
